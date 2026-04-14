@@ -278,20 +278,20 @@ html[data-theme='dark'] .hero__grain { mix-blend-mode: screen; opacity: .18; }
 }
 @keyframes scrolltick { to { top: 40px; } }
 
-/* rotator */
+/* rotator — inline-grid stacks all items in one cell, so the container
+   sizes to the widest phrase automatically (no layout shift, no gap). */
 .rotator {
-  display: inline-block;
-  position: relative;
+  display: inline-grid;
+  grid-template-areas: "stack";
   height: 1.25em;
   overflow: hidden;
-  vertical-align: bottom;
+  vertical-align: baseline;
   color: var(--accent);
   font-style: italic;
-  min-width: min(70vw, 300px);
 }
 .rotator__item {
-  display: block;
-  position: absolute; inset: 0;
+  grid-area: stack;
+  white-space: nowrap;
   transform: translateY(100%);
   opacity: 0;
   transition: transform .5s var(--ease), opacity .5s;
