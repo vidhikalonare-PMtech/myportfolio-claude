@@ -1,4 +1,5 @@
-// Main: Lenis smooth scroll, GSAP scroll-driven reveals, theme toggle, nav, hero rotator.
+// Main: theme toggle, nav state, GSAP scroll reveals, hero rotator.
+// Native smooth scroll is used (via CSS `scroll-behavior: smooth`).
 (function () {
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -26,36 +27,6 @@
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
 
-  // --- Lenis smooth scroll
-  if (!reduced && window.Lenis) {
-    const lenis = new window.Lenis({
-      duration: 1.15,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-    });
-    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-    requestAnimationFrame(raf);
-
-    // Anchor links via Lenis
-    document.querySelectorAll('a[href^="#"]').forEach((a) => {
-      a.addEventListener('click', (e) => {
-        const id = a.getAttribute('href');
-        if (!id || id === '#') return;
-        const target = document.querySelector(id);
-        if (!target) return;
-        e.preventDefault();
-        lenis.scrollTo(target, { offset: -80, duration: 1.2 });
-      });
-    });
-
-    // Keep GSAP ScrollTrigger in sync with Lenis
-    if (window.gsap && window.ScrollTrigger) {
-      lenis.on('scroll', window.ScrollTrigger.update);
-      window.gsap.ticker.add((time) => lenis.raf(time * 1000));
-      window.gsap.ticker.lagSmoothing(0);
-    }
-  }
-
   // --- Hero title reveal on load
   window.addEventListener('load', () => {
     const title = document.querySelector('.hero__title');
@@ -80,7 +51,7 @@
     els.forEach((el) => el.classList.add('is-in'));
   }
 
-  // --- GSAP parallax on project thumbs
+  // --- GSAP parallax on project thumbs (uses native scroll)
   if (!reduced && window.gsap && window.ScrollTrigger) {
     window.gsap.registerPlugin(window.ScrollTrigger);
     document.querySelectorAll('.project__thumb svg').forEach((svg) => {
@@ -102,7 +73,6 @@
       items[next].classList.remove('is-out');
       items[next].classList.add('is-active');
       i = next;
-      // Clear the "is-out" flag on the previous previous, to reset
       const prev = (i - 2 + items.length) % items.length;
       items[prev].classList.remove('is-out');
     }, 2600);

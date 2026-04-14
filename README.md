@@ -6,7 +6,7 @@ GitHub Pages serves directly.
 
 - Soft blush + charcoal palette with a dark mode toggle (sun/moon in nav).
 - Custom morphing cursor on desktop (dot → ring → "view →" pill).
-- Smooth Lenis scrolling, GSAP parallax, and tasteful scroll-reveal fades.
+- Native smooth scrolling, GSAP parallax, and tasteful scroll-reveal fades.
 - Fraunces display serif + Inter body, loaded via Google Fonts with
   `font-display: swap`.
 - Generated résumé PDF at `assets/Vidhika_Lonare_Resume.pdf`.
@@ -48,7 +48,7 @@ instructions on the Pages settings screen.
 index.html                     single-page markup
 styles/main.css                tokens (light+dark), layout, components
 styles/cursor.css              custom cursor + hover morphs
-scripts/main.js                Lenis, GSAP, theme toggle, nav, rotator
+scripts/main.js                GSAP reveals, theme toggle, nav, rotator
 scripts/cursor.js              cursor follow + morph logic
 scripts/projects.js            project drawer expand/collapse
 assets/favicon.svg             VL monogram
