@@ -1,0 +1,61 @@
+/* Custom cursor — desktop only */
+.cursor {
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 100;
+  mix-blend-mode: difference;
+  will-change: transform;
+}
+.cursor__dot,
+.cursor__ring {
+  position: absolute;
+  top: 0; left: 0;
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+}
+.cursor__dot {
+  width: 8px; height: 8px;
+  background: #F6E9E4;
+  transition: opacity .2s, transform .1s;
+  transform-origin: center;
+}
+.cursor__ring {
+  width: 40px; height: 40px;
+  border: 1px solid #F6E9E4;
+  opacity: 0;
+  transition: opacity .25s var(--ease), width .3s var(--ease), height .3s var(--ease), background .25s, border-color .25s;
+  display: flex; align-items: center; justify-content: center;
+  color: #1C1A19;
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: .04em;
+  font-weight: 500;
+  text-transform: lowercase;
+}
+.cursor__label { opacity: 0; transition: opacity .2s; white-space: nowrap; }
+
+/* Link hover → ring appears */
+.cursor.is-link .cursor__dot { opacity: 0; }
+.cursor.is-link .cursor__ring { opacity: 1; }
+
+/* Project hover → pill with label */
+.cursor.is-project .cursor__dot { opacity: 0; }
+.cursor.is-project .cursor__ring {
+  opacity: 1;
+  width: 96px; height: 96px;
+  background: #F6E9E4;
+  border-color: transparent;
+}
+.cursor.is-project .cursor__label { opacity: 1; }
+
+/* Hide on touch devices */
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor { display: none; }
+  html, body { cursor: auto; }
+}
+
+/* Hide default cursor on interactive elements when custom cursor is active */
+@media (pointer: fine) {
+  html.has-cursor, html.has-cursor * { cursor: none !important; }
+}
